@@ -6,7 +6,7 @@
 <title>Micro-Expense &amp; Habit Impact</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Cinzel+Decorative:wght@900&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --bg:#0d0f14;
@@ -24,9 +24,9 @@
   --rose:#f87171;
   --green:#4ade80;
   --blue:#60a5fa;
-  --fd:'Syne',sans-serif;
-  --fb:'DM Sans',sans-serif;
-  --fm:'DM Mono',monospace;
+  --fd:'Outfit',sans-serif;
+  --fb:'Outfit',sans-serif;
+  --fm:'JetBrains Mono',monospace;
   --ease:cubic-bezier(0.4,0,0.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -55,8 +55,16 @@ body::after{
 .page{
   position:relative;z-index:1;
   max-width:660px;margin:0 auto;
-  padding:2.8rem 1.5rem 6rem;
+  padding:5rem 1.5rem 6rem;
 }
+
+/* Navbar */
+.site-pill-nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:9999;width:calc(100% - 2.5rem);max-width:680px;}
+.site-pill-inner{display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 1rem;border-radius:100px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);box-shadow:0 4px 24px rgba(0,0,0,0.35);}
+.site-pill-logo{display:flex;align-items:center;gap:0.5rem;font-family:'Cinzel Decorative',serif;font-size:0.9rem;font-weight:900;color:rgba(255,255,255,0.95);text-decoration:none;letter-spacing:0.04em;text-shadow:0 0 18px rgba(47,186,189,0.45);transition:opacity 0.2s;}
+.site-pill-logo:hover{opacity:0.7;}
+.site-back-btn{display:flex;align-items:center;gap:0.4rem;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.35rem 0.8rem;border-radius:100px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);transition:background 0.2s,color 0.2s;}
+.site-back-btn:hover{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);}
 
 /* Badge */
 .badge{
@@ -75,7 +83,7 @@ body::after{
 .hero{margin-bottom:2.2rem;}
 .hero h1{
   font-family:var(--fd);font-size:clamp(2.2rem,7.5vw,3.5rem);
-  font-weight:800;line-height:1.1;letter-spacing:-0.025em;margin-bottom:1rem;
+  font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1rem;
 }
 .c1{color:var(--cyan);}
 .c2{color:var(--violet);}
@@ -353,6 +361,30 @@ input[type=range]::-moz-range-thumb{
 </style>
 </head>
 <body>
+
+<div class="site-pill-nav">
+  <div class="site-pill-inner">
+    <a href="/" class="site-pill-logo">
+      <svg width="20" height="20" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="18" cy="21" rx="10" ry="12" fill="#1a1a2e"/>
+        <ellipse cx="18" cy="22" rx="6" ry="8" fill="rgba(255,255,255,0.88)"/>
+        <ellipse cx="18" cy="10" rx="7.5" ry="7" fill="#1a1a2e"/>
+        <circle cx="15.2" cy="9" r="1.7" fill="white"/>
+        <circle cx="20.8" cy="9" r="1.7" fill="white"/>
+        <circle cx="15.6" cy="9.2" r="0.9" fill="#0a0e0b"/>
+        <circle cx="21.2" cy="9.2" r="0.9" fill="#0a0e0b"/>
+        <path d="M16.2 12.5 Q18 14.5 19.8 12.5 Q18 11.5 16.2 12.5Z" fill="#f59e0b"/>
+        <ellipse cx="14" cy="32.5" rx="3.5" ry="1.5" fill="#f59e0b"/>
+        <ellipse cx="22" cy="32.5" rx="3.5" ry="1.5" fill="#f59e0b"/>
+        <path d="M8 16 Q5 21 8 26 Q10 22 10 18Z" fill="#1a1a2e"/>
+        <path d="M28 16 Q31 21 28 26 Q26 22 26 18Z" fill="#1a1a2e"/>
+      </svg>
+      Shifat
+    </a>
+    <a href="/" class="site-back-btn">← Back</a>
+  </div>
+</div>
+
 <div class="page">
 
   <div class="badge"><span class="badge-dot"></span>Financial Reality Check</div>
@@ -484,6 +516,7 @@ document.getElementById('curRow').addEventListener('click', e => {
   b.classList.add('active');
   curSym = b.dataset.sym; curCode = b.dataset.code;
   document.getElementById('symDisp').textContent = curSym;
+  calculate();
 });
 
 /* Frequency */
@@ -494,6 +527,7 @@ document.getElementById('fTabs').addEventListener('click', e => {
   t.classList.add('active');
   freq = t.dataset.f;
   document.getElementById('tUnit').textContent = freq === 'daily' ? 'day' : freq === 'weekly' ? 'week' : 'month';
+  calculate();
 });
 
 /* Slider */
@@ -504,7 +538,7 @@ function updateTrack() {
   years = +slider.value;
   document.getElementById('slVal').textContent = years + (years === 1 ? ' Year' : ' Years');
 }
-slider.addEventListener('input', updateTrack);
+slider.addEventListener('input', ()=>{ updateTrack(); calculate(); });
 updateTrack();
 
 /* Format helpers */
@@ -574,7 +608,6 @@ function calculate() {
   res.classList.remove('show');
   void res.offsetWidth; /* reflow for re-trigger */
   res.classList.add('show');
-  if (!wasShown) res.scrollIntoView({behavior:'smooth',block:'start'});
 
   /* Total */
   setTimeout(()=>{ countUp(document.getElementById('totalCost'), total, curSym); }, 100);
@@ -638,23 +671,25 @@ function calculate() {
 }
 
 document.getElementById('calcBtn').addEventListener('click', calculate);
+document.getElementById('hcost').addEventListener('input', calculate);
+document.getElementById('hname').addEventListener('input', calculate);
+document.getElementById('tInput').addEventListener('input', calculate);
 document.getElementById('hcost').addEventListener('keydown', e=>{ if(e.key==='Enter') calculate(); });
 document.getElementById('hname').addEventListener('keydown', e=>{ if(e.key==='Enter') calculate(); });
 
 /* Share */
 document.getElementById('shareX').addEventListener('click', ()=>{
   const d = window._sd; if(!d) return;
-  const txt = `💸 I'll spend ${d.curSym}${Math.round(d.total).toLocaleString()} on "${d.habit}" over ${d.years} years.\n\n📈 If invested at 7%, that becomes ${d.curSym}${Math.round(d.fv).toLocaleString()}!\n\nCheck your micro-expenses 👇`;
+  const txt = `💸 Micro-Expense Reality Check\n\nHabit: "${d.habit}"\nTotal over ${d.years} yrs: ${d.curSym}${Math.round(d.total).toLocaleString()}\nIf invested at 7%: ${d.curSym}${Math.round(d.fv).toLocaleString()}\n\nCalculate yours 👇\nhttps://shifat0g.github.io/Micro-expenses`;
   window.open('https://x.com/intent/tweet?text='+encodeURIComponent(txt),'_blank');
 });
 document.getElementById('shareTg').addEventListener('click', ()=>{
   const d = window._sd; if(!d) return;
-  const txt = `💸 Micro-Expense Reality Check\n\nI'll spend ${d.curSym}${Math.round(d.total).toLocaleString()} on "${d.habit}" over ${d.years} years.\n\n📈 Invested at 7% compound interest → ${d.curSym}${Math.round(d.fv).toLocaleString()}!\n\nCalculate your own 👇\nhttps://shifat0g.github.io/Micro-expenses`;
+  const txt = `💸 Micro-Expense Reality Check\n\nHabit: "${d.habit}"\n📅 Total over ${d.years} years: ${d.curSym}${Math.round(d.total).toLocaleString()}\n📈 If invested at 7% compound interest → ${d.curSym}${Math.round(d.fv).toLocaleString()}\n\nCalculate your own habits 👇\nhttps://shifat0g.github.io/Micro-expenses`;
   window.open('https://t.me/share/url?url=https://shifat0g.github.io/Micro-expenses&text='+encodeURIComponent(txt),'_blank');
 });
 
-/* Auto demo */
-window.addEventListener('load', ()=>setTimeout(calculate, 350));
+/* No auto-demo on load */
 </script>
 </body>
 </html>
